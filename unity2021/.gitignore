@@ -1,0 +1,19 @@
+
+/_dist_/
+/_build_/
+/ImageSee/Assets/TextMesh Pro/
+/ImageSee/Assets/TextMesh Pro.meta
+/ImageSee/Assets/Plugins/
+/ImageSee/Assets/Plugins.meta
+/ImageSee/Assets/3rd/
+/ImageSee/Assets/3rd.meta
+/ImageSee/Library/
+/ImageSee/obj/
+/ImageSee/Logs/
+/ImageSee/Temp/
+/ImageSee/UserSettings/
+/ImageSee/*.sln
+/ImageSee/*.csproj
+/ImageSee/.vsconfig
+/ImageSee/.vs/
+/.UNITY_HOME.env
