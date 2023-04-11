@@ -1,6 +1,7 @@
 
 syntax = "proto3";
 import "shared.proto";
+import "google/api/annotations.proto";
 
 option csharp_namespace = "XTC.FMP.MOD.ImageSee.LIB.Proto";
 package xtc.fmp.imagesee;
@@ -8,7 +9,12 @@ package xtc.fmp.imagesee;
 // 健康
 service Healthy {
     // 回显
-    rpc Echo(HealthyEchoRequest) returns (HealthyEchoResponse) {}
+    rpc Echo(HealthyEchoRequest) returns (HealthyEchoResponse) {
+        option (google.api.http) = {
+            post: "/v1/xtc/imagesee/healthy/echo",
+            body: "*",
+        };
+    }
 }
 
 // 回显的请求

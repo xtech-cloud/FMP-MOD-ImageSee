@@ -5,21 +5,24 @@
       slot: ui根节点在主Canvas中的挂载路径
     -->
   <UI visible="true" slot="[root]"/>
+  <!-- World
+      visible: 预加载完成后是否显示
+      slot: world根节点的挂载路径
+    -->
+  <World visible="true" slot="[root]"/>
   <!-- 远程过程调用
       address: 地址
     -->
   <GRPC address="https://localhost:19000"/>
   <!-- 样式列表
       name: 名称
-      Background.visible: 背景是否可见
-      Background.visible: 背景的RGBA颜色
-      Pending.image: 加载进度的图片
+      ToolBar.visible: 工具栏可见行，可选值为[auto, alwaysOn, alwaysOff]
     -->
   <Styles>
     <Style name="default">
       <Background visible="true" color="#00000088"/>
       <Pending image="Pending.png"/>
-      <ToolBar>
+      <ToolBar visible="auto">
         <Anchor horizontal="right" vertical="bottom" marginH="36" marginV="24"/>
       </ToolBar>
     </Style>
@@ -27,10 +30,13 @@
   <!-- 预创建的实例列表
       uid: 实例的唯一ID
       style: 使用的样式名
-      uiSlot: ui的挂载路径
+      uiRoot: UI挂载的根节点（需可见），空值时等于UI.slot
+      uiSlot: UI在uiRoot下的挂载路径
+      worldRoot: World挂载的根节点（需可见），空值时等于World.slot
+      worldSlot: World在worldRoot下的路径
     -->
   <Instances>
-    <Instance uid="default" style="default" uiSlot=""/>
+    <Instance uid="default" style="default" uiRoot="" uiSlot="" worldRoot="" worldSlot=""/>
   </Instances>
   <!-- 预加载 -->
   <Preload>

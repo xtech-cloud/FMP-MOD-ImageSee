@@ -25,6 +25,8 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
 
         public class ToolBar
         {
+            [XmlAttribute("visible")]
+            public string visible { get; set; } = "auto";
             [XmlElement("Anchor")]
             public Anchor anchor { get; set; } = new Anchor();
         }

@@ -46,6 +46,7 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             uiReference_.btnZoomOut = rootUI.transform.Find("ToolBar/btnZoomOut").GetComponent<Button>();
             uiReference_.btnZoomIn = rootUI.transform.Find("ToolBar/btnZoomIn").GetComponent<Button>();
 
+
             applyStyle();
             bindEvents();
         }
@@ -72,6 +73,7 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             uiReference_.pending.gameObject.SetActive(true);
             uiReference_.tfToolBar.gameObject.SetActive(false);
             loadImage(_source, _uri);
+
         }
 
         /// <summary>
@@ -95,7 +97,10 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
                 fitImage();
                 uiReference_.pending.gameObject.SetActive(false);
                 uiReference_.image.gameObject.SetActive(true);
-                uiReference_.tfToolBar.gameObject.SetActive(true);
+                if (style_.toolBar.visible == "alwaysOn")
+                {
+                    uiReference_.tfToolBar.gameObject.SetActive(true);
+                }
                 scale_ = 1.0f;
             }, () =>
             {
@@ -107,6 +112,8 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
         {
             var rtParent = uiReference_.image.transform.parent.GetComponent<RectTransform>();
             var rtImage = uiReference_.image.rectTransform;
+            // 容器宽高比例
+            var ratio = rtParent.rect.width / rtParent.rect.height;
             //图片和容器的宽度差值
             float differenceX = rtImage.rect.size.x - rtParent.rect.size.x;
             //图片和容器的高度差值
@@ -115,7 +122,8 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             float fitHeight = rtImage.rect.height;
             if (differenceX > 0 || differenceY > 0)
             {
-                if (differenceX > differenceY)
+                // 如果（宽度差）大于（高度差对应的等比例的宽度差），则图片比容器宽
+                if (differenceX > differenceY * ratio)
                 {
                     fitWidth = rtParent.rect.size.x;
                     fitHeight = rtImage.rect.size.y / rtImage.rect.size.x * fitWidth;
@@ -163,6 +171,13 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
                 if (scale_ < 1)
                     scale_ = 1;
                 uiReference_.image.rectTransform.sizeDelta = originSizeDelta_ * scale_;
+            });
+
+            uiReference_.image.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                if (style_.toolBar.visible != "auto")
+                    return;
+                uiReference_.tfToolBar.gameObject.SetActive(!uiReference_.tfToolBar.gameObject.activeSelf);
             });
         }
     }
