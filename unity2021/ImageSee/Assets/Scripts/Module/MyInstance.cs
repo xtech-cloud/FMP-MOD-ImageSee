@@ -19,6 +19,7 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             public RawImage pending;
             public Button btnZoomOut;
             public Button btnZoomIn;
+            public Slider sliderZoom;
         }
 
         private ContentReader contentReader_ = null;
@@ -45,6 +46,7 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             uiReference_.tfToolBar = rootUI.transform.Find("ToolBar");
             uiReference_.btnZoomOut = rootUI.transform.Find("ToolBar/btnZoomOut").GetComponent<Button>();
             uiReference_.btnZoomIn = rootUI.transform.Find("ToolBar/btnZoomIn").GetComponent<Button>();
+            uiReference_.sliderZoom = rootUI.transform.Find("ToolBar/sliderZoom").GetComponent<Slider>();
 
 
             applyStyle();
@@ -66,7 +68,7 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
         /// </remarks>
         public void HandleOpened(string _source, string _uri)
         {
-            contentReader_ = new ContentReader(contentObjectsPool);
+            contentReader_ = new ContentReader(assetObjectsPool);
             contentReader_.AssetRootPath = settings_["path.assets"].AsString();
             uiReference_.image.gameObject.SetActive(false);
             rootUI.gameObject.SetActive(true);
@@ -102,6 +104,7 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
                     uiReference_.tfToolBar.gameObject.SetActive(true);
                 }
                 scale_ = 1.0f;
+                uiReference_.sliderZoom.value = uiReference_.sliderZoom.minValue;
             }, () =>
             {
 
@@ -145,16 +148,19 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             ColorUtility.TryParseHtmlString(style_.background.color, out color);
             uiReference_.background.color = color;
 
+            uiReference_.pending.GetComponent<RectTransform>().sizeDelta = new Vector2(style_.pending.size, style_.pending.size);
             loadTextureFromTheme(style_.pending.image, (_texture) =>
             {
                 uiReference_.pending.texture = _texture;
-                uiReference_.pending.SetNativeSize();
             }, () =>
             {
 
             });
 
             alignByAncor(uiReference_.tfToolBar, style_.toolBar.anchor);
+
+            uiReference_.sliderZoom.maxValue = style_.toolBar.maxScale;
+            uiReference_.sliderZoom.minValue = 1.0f;
         }
 
         private void bindEvents()
@@ -178,6 +184,10 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
                 if (style_.toolBar.visible != "auto")
                     return;
                 uiReference_.tfToolBar.gameObject.SetActive(!uiReference_.tfToolBar.gameObject.activeSelf);
+            });
+            uiReference_.sliderZoom.onValueChanged.AddListener((_value) =>
+            {
+                uiReference_.image.rectTransform.sizeDelta = originSizeDelta_ * _value;
             });
         }
     }

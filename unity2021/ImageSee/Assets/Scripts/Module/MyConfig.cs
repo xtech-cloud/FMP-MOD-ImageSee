@@ -13,6 +13,8 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
         {
             [XmlAttribute("image")]
             public string image { get; set; } = "";
+            [XmlAttribute("size")]
+            public int size { get; set; } = 160;
         }
 
         public class Background
@@ -29,6 +31,9 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             public string visible { get; set; } = "auto";
             [XmlElement("Anchor")]
             public Anchor anchor { get; set; } = new Anchor();
+
+            [XmlAttribute("maxScale")]
+            public float maxScale { get; set; } = 4.0f;
         }
 
         public class Style
