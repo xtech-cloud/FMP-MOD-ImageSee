@@ -8,6 +8,15 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
     /// </summary>
     public class MyConfig : MyConfigBase
     {
+        public class CloseButton
+        {
+            [XmlAttribute("visible")]
+            public bool visible { get; set; } = false;
+
+            [XmlArray("OnClickSubjects"), XmlArrayItem("Subject")]
+            public Subject[] OnClickSubjectS { get; set; } = new Subject[0];
+        }
+
 
         public class Pending
         {
@@ -34,6 +43,9 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
 
             [XmlAttribute("maxScale")]
             public float maxScale { get; set; } = 4.0f;
+
+            [XmlElement("CloseButton")]
+            public CloseButton closeButton { get; set; } = new CloseButton();
         }
 
         public class Style

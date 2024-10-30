@@ -20,6 +20,7 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             public Button btnZoomOut;
             public Button btnZoomIn;
             public Slider sliderZoom;
+            public Button btnClose;
         }
 
         private ContentReader contentReader_ = null;
@@ -45,9 +46,11 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             uiReference_.pending = rootUI.transform.Find("Pending").GetComponent<RawImage>();
             uiReference_.tfToolBar = rootUI.transform.Find("ToolBar");
             uiReference_.btnZoomOut = rootUI.transform.Find("ToolBar/btnZoomOut").GetComponent<Button>();
+            uiReference_.btnClose = rootUI.transform.Find("ToolBar/btnClose").GetComponent<Button>();
             uiReference_.btnZoomIn = rootUI.transform.Find("ToolBar/btnZoomIn").GetComponent<Button>();
             uiReference_.sliderZoom = rootUI.transform.Find("ToolBar/sliderZoom").GetComponent<Slider>();
 
+            uiReference_.btnClose.gameObject.SetActive(style_.toolBar.closeButton.visible);
 
             applyStyle();
             bindEvents();
@@ -189,6 +192,12 @@ namespace XTC.FMP.MOD.ImageSee.LIB.Unity
             {
                 uiReference_.image.rectTransform.sizeDelta = originSizeDelta_ * _value;
             });
+            uiReference_.btnClose.onClick.AddListener(() =>
+            {
+                Dictionary<string, object> paramS = new Dictionary<string, object>();
+                publishSubjects(style_.toolBar.closeButton.OnClickSubjectS, paramS);
+            });
+
         }
     }
 }

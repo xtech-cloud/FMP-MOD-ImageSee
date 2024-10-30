@@ -27,6 +27,16 @@
 			<Pending image="pending.png" size="160"/>
 			<ToolBar visible="auto" maxScale="4.0">
 				<Anchor horizontal="right" vertical="bottom" marginH="36" marginV="24"/>
+				<CloseButton visible="false">
+					<OnClickSubjects>
+            <Subject message="/XTC/ImageSee/Close">
+              <Parameters>
+                <Parameter key="uid" value="default" type="string"/>
+                <Parameter key="delay" value="0" type="float"/>
+              </Parameters>
+            </Subject>
+          </OnClickSubjects>
+        </CloseButton>
 			</ToolBar>
 		</Style>
 	</Styles>
